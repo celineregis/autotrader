@@ -2,8 +2,7 @@ module Pinnacle
 	
 	API_ROOT = "https://api.pinnacle.com/"
 	FOOTBALL_ID = {sportid: 29}.to_param
-	USER = "RV548242"
-	PASSWORD = "123!!!AAA"
+	
 	
 	def get_leagues(last_token=0)
 		extension = "v2/leagues?#{FOOTBALL_ID}"

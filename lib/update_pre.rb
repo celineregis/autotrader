@@ -17,100 +17,88 @@ module UpdatePre
 		end
 	end
 
-	#for initialization use current_events_array = []
 	def update_events_m
-		#result_array = get_fixtures(0, 0,"")
-		result_array = get_fixtures(0, 0,$redis.get("event_token"))
+		result_array = get_fixtures(0, 0,"")
 		unless result_array.nil?
 			events_list = result_array[0]
-			$redis.set("event_token", result_array[1])
-			#current_event_hash = {}
-			begin
-				current_event_hash = JSON.parse($redis.get "events")
-			rescue	
-				current_event_hash = {}
-			end
 			events_list.each do |league|
+				l = League.find_by pp_league_id: league["id"]
 				league["events"].each do |event|
-					unless event["home"].include? "Corners"
-						current_event_hash = remove_duplicate_event(event, current_event_hash, league["id"])
-						current_event_hash[event["id"]] = {
-							league_id: league["id"],
-							home: event["home"],
-							away: event["away"],
-							starts: event["starts"]  
-						}
-					end
+				 	l.events.create(
+				 		pp_event_id: event["id"],
+				 		event_start: event["starts"],
+				 		home: event["home"],
+				 		away: event["away"],
+				 	)
 				end
 			end
-			$redis.set "events", current_event_hash.to_json
 		end
 	end
 
-	def update_odds_m
-		#result_array = get_odds(0, 0,"")
-		result_array = get_odds(0, 0,$redis.get("odds_token"))
-		if result_array[0].nil? && result_array[1].nil?
-			puts "The API call was unsucceful, returned nil"
-		else
-			odds_list = result_array[0]
-			$redis.set("odds_token", result_array[1])
-			begin 
-				current_odds_hash = JSON.parse($redis.get "odds")
-			rescue
-				current_odds_hash = {}
-			end
-			odds_list.each do |league|
-				league["events"].each do |event|
-					event["periods"].each do |period|
-						if period["number"] == 0 && period["moneyline"] 
-							over_under_line = get_over_under_line_pre(period)
-							current_odds_hash[event["id"]] = {
-								home_odd: period["moneyline"]["home"],
-								draw_odd: period["moneyline"]["draw"],
-								away_odd: period["moneyline"]["away"],
-								over_odd: over_under_line["over"],
-								under_odd: over_under_line["under"],
-								over_under_line: over_under_line["points"]
-							}
-							current_odds_hash
-						end
-					end
-				end
-			end
-			$redis.set "odds", current_odds_hash.to_json
-		end
-	end
+	# def update_odds_m
+	# 	#result_array = get_odds(0, 0,"")
+	# 	result_array = get_odds(0, 0,$redis.get("odds_token"))
+	# 	if result_array[0].nil? && result_array[1].nil?
+	# 		puts "The API call was unsucceful, returned nil"
+	# 	else
+	# 		odds_list = result_array[0]
+	# 		$redis.set("odds_token", result_array[1])
+	# 		begin 
+	# 			current_odds_hash = JSON.parse($redis.get "odds")
+	# 		rescue
+	# 			current_odds_hash = {}
+	# 		end
+	# 		odds_list.each do |league|
+	# 			league["events"].each do |event|
+	# 				event["periods"].each do |period|
+	# 					if period["number"] == 0 && period["moneyline"] 
+	# 						over_under_line = get_over_under_line_pre(period)
+	# 						current_odds_hash[event["id"]] = {
+	# 							home_odd: period["moneyline"]["home"],
+	# 							draw_odd: period["moneyline"]["draw"],
+	# 							away_odd: period["moneyline"]["away"],
+	# 							over_odd: over_under_line["over"],
+	# 							under_odd: over_under_line["under"],
+	# 							over_under_line: over_under_line["points"]
+	# 						}
+	# 						current_odds_hash
+	# 					end
+	# 				end
+	# 			end
+	# 		end
+	# 		$redis.set "odds", current_odds_hash.to_json
+	# 	end
+	# end
 	
-	def get_odds_map_update
-		events_to_delete = manage_event_hashes_for_expiration
-		events_to_update = {}
-		all_leagues = JSON.parse($redis.get "leagues")
-		all_events = JSON.parse($redis.get "events")
-		all_odds = JSON.parse($redis.get "odds")
-		map = JSON.parse($redis.get "odds_map")
-		#map = {}
-		all_events.each do |event_id, event|
-			league = all_leagues[event["league_id"].to_s]
-			odds = all_odds[event_id]
-			if league && odds
-				map[league["group"]] ||= {} 
-				map[league["group"]][league["name"]] ||= {} 
-				#Check if this event already exists in the map and if the odds really changed
-				event_in_map = map[league["group"]][league["name"]][event_id]
-				unless event_in_map && odds_for_event_still_the_same?(event_in_map, odds)
-					match = create_match_hash(event, odds)
-					events_to_update[event_id] = match
-					map[league["group"]][league["name"]][event_id] = match
-				end
-			end
-		end
-		$redis.set("odds_map", map.to_json)
-		updates = {
-			delete: events_to_delete, 
-			update: events_to_update,
-		}
-	end
+	# def get_odds_map_update
+	# 	events_to_delete = manage_event_hashes_for_expiration
+	# 	events_to_update = {}
+	# 	all_leagues = JSON.parse($redis.get "leagues")
+	# 	all_events = JSON.parse($redis.get "events")
+	# 	all_odds = JSON.parse($redis.get "odds")
+	# 	map = JSON.parse($redis.get "odds_map")
+	# 	#map = {}
+	# 	all_events.each do |event_id, event|
+	# 		league = all_leagues[event["league_id"].to_s]
+	# 		odds = all_odds[event_id]
+	# 		if league && odds
+	# 			map[league["group"]] ||= {} 
+	# 			map[league["group"]][league["name"]] ||= {} 
+	# 			#Check if this event already exists in the map and if the odds really changed
+	# 			event_in_map = map[league["group"]][league["name"]][event_id]
+	# 			unless event_in_map && odds_for_event_still_the_same?(event_in_map, odds)
+	# 				match = create_match_hash(event, odds)
+	# 				events_to_update[event_id] = match
+	# 				map[league["group"]][league["name"]][event_id] = match
+	# 			end
+	# 		end
+	# 	end
+	# 	$redis.set("odds_map", map.to_json)
+	# 	updates = {
+	# 		delete: events_to_delete, 
+	# 		update: events_to_update,
+	# 	}
+	# end
 
 	def manage_event_hashes_for_expiration
 		delete_old_events_from_odds_map
