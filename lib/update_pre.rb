@@ -21,7 +21,7 @@ module UpdatePre
 
 	def update_events_m
 		event_token = get_event_token
-		result_array = get_fixtures(0, 0,"")
+		result_array = get_fixtures(0, 0,event_token)
 		unless result_array.nil?
 			events_list = result_array[0]
 			events_list.each do |league|

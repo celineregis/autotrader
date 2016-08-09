@@ -1,5 +1,5 @@
 <div class="header">
-  Tipico Autotrader Test Center
+  <%= image_tag("logo.PNG", class: "logo" ) %> 
 </div>
 
 <!--accordion -->	
@@ -18,7 +18,7 @@
 						</a>
 						<div id="<%=country%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%=country%>">
 							<%league_hash.each do |league_name, event_array|%>
-								<a class="navie" role="button" data-league=<%="#{country.delete(' ')}#{league_name.delete(' ')}"%>>
+								<a class="navie" role="button" data-league=<%=event_array[0].league_id%>>
 									<div class="panel-body">
 										<%=league_name%>
 									</div>
@@ -29,5 +29,38 @@
 				<%end%> 
 			</div>
 		</div>
+	</div>
+	<div class="col-md-12 match-table">
+		<div class="row">
+			<h3><%=Time.new.strftime('%A %d %B %Y')%></h3>
+		</div>
+		<div class="row">
+			<table class="table table-striped">
+		    	<thead>
+		      		<tr>
+		        		<th>Country</th>
+		        		<th>League</th>
+		        		<th>Event</th>
+		        		<th>Start (UTC+2)</th>
+		        		<th>Live status</th>
+		      		</tr>
+		    	</thead>
+			    <tbody>
+			      	<%@events_hash.each do |country, league_hash|%>	
+			      		<%league_hash.each do |league_name, event_array|%>
+			      			<%event_array.each do |event| %>
+								<tr class="table-row table-<%=event.league_id%>">
+						        	<td><%=country%></td>
+						        	<td><%=league_name%></td>
+						        	<td><%= link_to "#{event.home} v #{event.away}", event_path(:id => event.id)%></a></td>
+						        	<td><%="Today #{(event.event_start + (60*60*2)).to_formatted_s(:time)}"%></td>
+						        	<td style="padding-left: 40px;"><input type="checkbox" checked onclick="return false"/></td>
+			     				</tr>
+			      			<%end%>
+			      		<%end%>
+			      	<%end%>
+			    </tbody>
+		  	</table>
+	  	</div>
 	</div>
 </div>

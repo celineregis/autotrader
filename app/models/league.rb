@@ -7,7 +7,7 @@ class League < ApplicationRecord
 	end
 
 	def self.get_leagues_with_event
-		events = Event.includes(:league).where(event_start: Time.zone.now..Time.zone.now.end_of_day)
+		events = Event.includes(:league).where(event_start: (Time.zone.now-60*60*2)..Time.zone.now.end_of_day)
 		events_hash = {}
 		events.each do |event|
 			events_hash[event.league.group] ||= {}
