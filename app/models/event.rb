@@ -5,7 +5,7 @@ class Event < ApplicationRecord
 	validates_format_of :home, without: /Corner/
 	validates_format_of :home, without: /Corners/
 
-	def self.update_events
-		update_events_m
+	def self.update_events(seed_mode = false)
+		update_events_m(seed_mode)
 	end
 end

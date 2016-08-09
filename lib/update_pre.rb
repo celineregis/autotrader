@@ -19,9 +19,13 @@ module UpdatePre
 		end
 	end
 
-	def update_events_m
+	def update_events_m(seed_mode = false)
 		event_token = get_event_token
-		result_array = get_fixtures(0, 0,event_token)
+		if seed_mode
+			result_array = get_fixtures(0, 1, "") 
+		else
+			result_array = get_fixtures(0, 1, event_token) 
+		end
 		unless result_array.nil?
 			events_list = result_array[0]
 			events_list.each do |league|
