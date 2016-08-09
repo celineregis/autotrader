@@ -1,3 +1,5 @@
+require "pstore"
+
 module UpdatePre
 
 	def update_leagues_m
@@ -18,6 +20,7 @@ module UpdatePre
 	end
 
 	def update_events_m
+		event_token = get_event_token
 		result_array = get_fixtures(0, 0,"")
 		unless result_array.nil?
 			events_list = result_array[0]
@@ -32,6 +35,23 @@ module UpdatePre
 				 	)
 				end
 			end
+		end
+		store_event_token(result_array[1])
+	end
+
+	def get_event_token
+		tokens = PStore.new("tokens.pstore")
+		event_token = ""
+		tokens.transaction(true) do 
+			event_token = tokens.fetch(:event_token).to_s
+		end
+		event_token
+	end
+
+	def store_event_token(event_token)
+		tokens = PStore.new("tokens.pstore")
+		tokens.transaction do 
+			tokens[:event_token] = event_token
 		end
 	end
 

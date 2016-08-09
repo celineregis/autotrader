@@ -1,0 +1,33 @@
+<div class="header">
+  Tipico Autotrader Test Center
+</div>
+
+<!--accordion -->	
+<div class="container-fluid content">
+	<div class="row">
+		<div class="col-md-2 side-nav">
+			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+				<%@events_hash.each do |country, league_hash|%>	
+					<div class="panel panel-default">
+						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%=country%>" aria-expanded="true" aria-controls="<%=country%>">
+							<div class="panel-heading" role='tab' id='heading<%=country%>'>
+								<h4 class="panel-title">
+									<%=country%>
+								</h4>
+							</div>
+						</a>
+						<div id="<%=country%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%=country%>">
+							<%league_hash.each do |league_name, event_array|%>
+								<a class="navie" role="button" data-league=<%="#{country.delete(' ')}#{league_name.delete(' ')}"%>>
+									<div class="panel-body">
+										<%=league_name%>
+									</div>
+								</a>
+							<%end%>
+						</div>
+					</div>
+				<%end%> 
+			</div>
+		</div>
+	</div>
+</div>

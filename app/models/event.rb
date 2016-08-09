@@ -8,5 +8,4 @@ class Event < ApplicationRecord
 	def self.update_events
 		update_events_m
 	end
-
 end
