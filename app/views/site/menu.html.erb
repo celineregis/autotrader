@@ -54,7 +54,11 @@
 						        	<td><%=league_name%></td>
 						        	<td><%= link_to "#{event.home} v #{event.away}", event_path(:id => event.id)%></a></td>
 						        	<td><%="Today #{(event.event_start + (60*60*2)).to_formatted_s(:time)}"%></td>
-						        	<td style="padding-left: 40px;"><input type="checkbox" checked onclick="return false"/></td>
+						        	<% if event.is_live %>
+						        		<td style="padding-left: 40px;"><input type="checkbox" checked onclick="return false"/></td>
+						        	<%else%>
+						        		<td style="padding-left: 40px;"><input type="checkbox" onclick="return false"/></td>
+						        	<%end%>
 			     				</tr>
 			      			<%end%>
 			      		<%end%>
