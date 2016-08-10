@@ -5,5 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+League.delete_all
+Event.delete_all
 League.update_leagues
-Event.update_events
+Event.update_events(true)
