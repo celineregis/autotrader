@@ -14,13 +14,17 @@ module UpdateLive
 		11 => "Penalties"
 	}
 
+	def get_ids_of_live_events
+		live_events = get_live_fixtures_in_pinnacle_offering
+		get_live_status_hash(live_events)
+	end
+
 	def get_live_events_hash
 		live_events = get_live_fixtures_in_pinnacle_offering
 		live_status = get_live_status_hash(live_events)
 		unless live_events.length == 0
 			result = get_live_odds("")
 			all_odds = convert_to_format(result[0])
-			binding.pry
 			live_events.each do |league|
 				league["events"].each do |event|
 					league_info = all_leagues[league["id"].to_s]
@@ -56,6 +60,7 @@ module UpdateLive
 				end
 			end
 		end
+		live_events_hash
 	end
 
 	def get_live_status_hash(live_events)
