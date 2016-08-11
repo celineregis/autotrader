@@ -17,7 +17,7 @@ function askForUpdatesInLiveStatus(){
     	dataType: "json", 
     	success: updateCheckBoxes
     });
-    setTimeout(askForUpdatesInLiveStatus, 5000);
+    setTimeout(askForUpdatesInLiveStatus, 60000);
 }
 
 

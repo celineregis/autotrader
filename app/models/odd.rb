@@ -25,6 +25,4 @@ class Odd < ApplicationRecord
 		$live_events = new_ids
 		update_live_events
 	end
-
-	
 end

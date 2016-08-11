@@ -67,7 +67,7 @@ module UpdateLive
 		event_ids = []
 		live_events.each do |league|
 			league["events"].each do |event|
-				event_ids << event["id"]
+				event_ids << event["id"] if event["state"] < 7
 			end
 		end
 		event_ids

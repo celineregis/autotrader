@@ -45,6 +45,7 @@
 		        		<th>Live status</th>
 		      		</tr>
 		    	</thead>
+		    	<!-- The live-status IDS are the pp_event_ids for better performance -->
 			    <tbody>
 			      	<%@events_hash.each do |country, league_hash|%>	
 			      		<%league_hash.each do |league_name, event_array|%>
@@ -55,9 +56,9 @@
 						        	<td><%= link_to "#{event.home} v #{event.away}", event_path(:id => event.id)%></a></td>
 						        	<td><%="Today #{(event.event_start + (60*60*2)).to_formatted_s(:time)}"%></td>
 						        	<% if event.is_live %>
-						        		<td style="padding-left: 40px;"><input id="live-check-<%=event.id%>" type="checkbox" checked onclick="return false"/></td>
+						        		<td style="padding-left: 40px;"><input id="live-check-<%=event.pp_event_id%>" type="checkbox" checked onclick="return false"/></td>
 						        	<%else%>
-						        		<td style="padding-left: 40px;"><input id="live-check-<%=event.id%>" type="checkbox" onclick="return false"/></td>
+						        		<td style="padding-left: 40px;"><input id="live-check-<%=event.pp_event_id%>" type="checkbox" onclick="return false"/></td>
 						        	<%end%>
 			     				</tr>
 			      			<%end%>
