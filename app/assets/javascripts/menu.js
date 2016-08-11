@@ -24,7 +24,6 @@ function askForUpdatesInLiveStatus(){
 
 
 window.onload = function() {
-
 	$(document).on('click', '.navie', function(event){
 		event.preventDefault()
 	    var targetSelector = ".table-" + event.target.parentElement.getAttribute('data-league')
