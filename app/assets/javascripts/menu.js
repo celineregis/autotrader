@@ -33,6 +33,15 @@ window.onload = function() {
 	    })
 	})
 
+	$(document).on('focus', '.slide', function(event){
+		$(event.target).animate({boxShadow : "0 0 5px 1px #c8102e"}, function(){
+			$(event.target).animate({boxShadow : "0 0 5px 1px transparent"});
+		}
+		);
+		 
+	});
+
 	setTimeout(askForUpdatesInLiveStatus, 0);
+
 
 }
