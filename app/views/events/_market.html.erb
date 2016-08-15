@@ -1,12 +1,38 @@
 <div class="col-md-3" style="margin-top:50px;">
-	<%market%>
+	<%=market%>
 </div>
 <div class="col-md-3">
-	<div id="home-odd" class="200x160px"></div>
+	<div class="GaugeMeter" 
+     data-percent="60" 
+     data-label="60%" 
+     data-style="Arch"
+     data-text=<%=odds[0]%>
+     data-color=#c8102e
+     ></div>
+
 </div>
 <div class="col-md-3">
-	<div id="draw-odd" class="200x160px"></div>	
+	<div class="GaugeMeter" 
+     data-percent="60" 
+     data-label="30%" 
+     data-style="Arch"
+     data-text=<%=odds[1]%>
+     data-color=#c8102e
+     >
+	</div>
 </div>
 <div class="col-md-3">
-	<div id="away-odd" class="200x160px"></div>
+	<div class="GaugeMeter" 
+     data-percent="60" 
+     data-label="10%" 
+     data-style="Arch"
+     data-text=<%=odds[2]%>
+     data-color=#c8102e
+     >
+	</div>
 </div>
+
+
+
+
+
