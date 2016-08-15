@@ -1,35 +1,68 @@
-<div class="col-md-3" style="margin-top:50px;">
-	<%=market%>
+<div class="col-md-1 market-name-holder">
+	<h4><%=market%></h4>
 </div>
-<div class="col-md-3">
-	<div class="GaugeMeter" 
-     data-percent="60" 
-     data-label="60%" 
-     data-style="Arch"
-     data-text=<%=odds[0]%>
-     data-color=#c8102e
-     ></div>
-
+<div class="col-md-2">
+	<table class="table-bordered vcenter" id="table-standard-match">
+    <thead class="thead-inverse">
+      <tr>
+        <th class="text-center" colspan="3">Odds</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th class="text-center">2.20</th>
+        <th class="text-center">2.30</th>
+        <th class="text-center">2.70</th>
+      </tr>
+      <tr>
+        <td class="col-md-2">3.20</td>
+        <td class="col-md-2">3.32</td>
+        <td class="col-md-2">3.23</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<div class="col-md-3">
-	<div class="GaugeMeter" 
-     data-percent="60" 
-     data-label="30%" 
-     data-style="Arch"
-     data-text=<%=odds[1]%>
-     data-color=#c8102e
-     >
-	</div>
+<div class="col-md-2">
+	<table class="table-bordered vcenter" id="table-last-30-sec">
+    <thead class="thead-inverse">
+      <tr>
+        <th class="text-center" colspan="3">Match risk</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th class="text-center">1</th>
+        <th class="text-center">X</th>
+        <th class="text-center">2</th>
+      </tr>
+      <tr>
+        <td class="col-md-2">20</td>
+        <td class="col-md-2">50</td>
+        <td class="col-md-2">20</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<div class="col-md-3">
-	<div class="GaugeMeter" 
-     data-percent="60" 
-     data-label="10%" 
-     data-style="Arch"
-     data-text=<%=odds[2]%>
-     data-color=#c8102e
-     >
-	</div>
+<div class="col-md-2">
+	<table class="table-bordered vcenter" id="table-last-X-sec">
+    <thead class="thead-inverse">
+      <tr>
+        <th class="text-center" colspan="3">Latest news</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th class="text-center">1</th>
+        <th class="text-center">X</th>
+        <th class="text-center">2</th>
+      </tr>
+      <tr>
+        <td class="col-md-2">20</td>
+        <td class="col-md-2">50</td>
+        <td class="col-md-2">20</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 

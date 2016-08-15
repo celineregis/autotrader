@@ -141,3 +141,22 @@ table{
  td > a:hover {
  	color: black;	
  }
+
+ .vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.market{
+	background-color: white;
+	margin-top: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding: 10px;
+	box-shadow:0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)!important;
+}
+
+.market-name-holder{
+	line-height: 45px;
+}
