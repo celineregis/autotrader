@@ -63,6 +63,11 @@
 			<div class="row card-banner">	
 				<h4>Markets</h4>
 			</div>
+			<% @odds_inwt["quotes"].each_with_index |quote, index| %>
+				<div class="row market">
+					<%= render partial: 'market', locals: { odds: @odds_inwt["quotes"][i], market: @odds_inwt["resultTypeId"][i], param: @odds_inwt["fixedParam"][i]%>
+				</div>
+			<%end%>
 		</div>
 		<div class="col-md-4 card-special">
 			<div class="row card-banner">	

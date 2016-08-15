@@ -25,4 +25,9 @@ class Odd < ApplicationRecord
 		$live_events = new_ids
 		update_live_events
 	end
+
+	def self.get_live_from_g
+		odds_live_inwt = get_all_odds_from_genius
+	end
+
 end

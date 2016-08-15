@@ -30,13 +30,15 @@ module UpdatePre
 			events_list = result_array[0]
 			events_list.each do |league|
 				l = League.find_by pp_league_id: league["id"]
-				league["events"].each do |event|
-				 	l.events.create(
-				 		pp_event_id: event["id"],
-				 		event_start: event["starts"],
-				 		home: event["home"],
-				 		away: event["away"],
-				 	)
+				if l 
+					league["events"].each do |event|
+					 	l.events.create(
+					 		pp_event_id: event["id"],
+					 		event_start: event["starts"],
+					 		home: event["home"],
+					 		away: event["away"],
+					 	)
+					end
 				end
 			end
 		end
