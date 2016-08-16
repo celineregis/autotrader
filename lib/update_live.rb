@@ -19,6 +19,19 @@ module UpdateLive
 		get_live_status_hash(live_events)
 	end
 
+	def get_live_odds_test(event_id)
+		league_id = []
+		event = Event.find_by(id: event_id)
+		if event
+			league_id << event.league_id
+			pp_event_id = event.pp_event_id
+			odds = get_odds(league_id, 0, "")
+			selection = odds[0][0]["events"].select{|event| event["id"] == pp_event_id}
+			binding.pry
+		end
+		
+	end
+
 	def get_live_events_hash
 		live_events = get_live_fixtures_in_pinnacle_offering
 		live_status = get_live_status_hash(live_events)
