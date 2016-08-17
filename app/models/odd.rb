@@ -26,8 +26,8 @@ class Odd < ApplicationRecord
 		update_live_events
 	end
 
-	def self.x(event_id)
-		get_live_odds_test(event_id)
+	def self.get_live_odds_for_event(event_id)
+		get_live_odds_by_id(event_id)
 	end
 
 end

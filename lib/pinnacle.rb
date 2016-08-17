@@ -58,7 +58,6 @@ module Pinnacle
 	 	live_extension = "&isLive=#{liveOnly}"
 	 	odds_format = odds ? "&oddsFormat=DECIMAL" : ""
 	 	full_query = extension + league_extension + token_extension + live_extension + odds_format
-	 	binding.pry
 	 	json_request(full_query)
 	end
 

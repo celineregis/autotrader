@@ -20,7 +20,7 @@ module UpdatePre
 	end
 
 	def update_events_m(seed_mode = false)
-		event_token = get_event_token(event_token)
+		event_token = get_event_token("event_token")
 		if seed_mode
 			result_array = get_fixtures(0, 1, "") 
 		else
@@ -42,7 +42,7 @@ module UpdatePre
 				end
 			end
 		end
-		store_event_token(result_array[1])
+		store_event_token(result_array[1],"event_token")
 	end
 
 	def get_event_token(token_type)

@@ -19,15 +19,14 @@ module UpdateLive
 		get_live_status_hash(live_events)
 	end
 
-	def get_live_odds_test(event_id)
+	def get_live_odds_by_id(event_id)
 		league_id = []
 		event = Event.find_by(id: event_id)
 		if event
-			league_id << event.league_id
+			league_id << League.find(event.league_id).pp_league_id
 			pp_event_id = event.pp_event_id
-			odds = get_odds(league_id, 0, "")
-			selection = odds[0][0]["events"].select{|event| event["id"] == pp_event_id}
-			binding.pry
+			odds = convert_to_format(get_odds(0, 1, "")[0])
+			odds.pp_event_id
 		end
 		
 	end
