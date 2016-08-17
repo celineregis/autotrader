@@ -11,13 +11,15 @@ updateCheckBoxes = function(updates){
 }
 
 function askForUpdatesInLiveStatus(){
-	$.ajax({
-    	type:'GET', 
-    	url: '/updates',
-    	dataType: "json", 
-    	success: updateCheckBoxes
-    });
-    setTimeout(askForUpdatesInLiveStatus, 60000);
+	if(window.location.href==="http://localhost:3000/"){
+		$.ajax({
+	    	type:'GET', 
+	    	url: '/updates',
+	    	dataType: "json", 
+	    	success: updateCheckBoxes
+    	});
+	}
+	setTimeout(askForUpdatesInLiveStatus, 60000);
 }
 
 
@@ -40,14 +42,6 @@ window.onload = function() {
 	$(document).on('input change', '.form-control', function(event){
 		$(event.target).animate({boxShadow : "0 0 5px 1px #c8102e"})
 	});
-
-	$(".GaugeMeter").gaugeMeter();
-
-
-	
-
 	setTimeout(askForUpdatesInLiveStatus, 0);
-
-
 }
 

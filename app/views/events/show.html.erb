@@ -11,7 +11,7 @@
 				</div>
 				<div class="col-md-2">
 					<% if @event.is_live %>	
-						<h1 style='color:black'>2-1</h1>
+						<h1 style='color:black'><%=@odds_info["home_goals"].to_i%>-<%=@odds_info["away_goals"].to_i%></h1>
 					<%else%>
 						<h3 style='color:black'>Not started</h3>
 					<%end%>
@@ -48,11 +48,11 @@
 		  					 <option>Danger</option>
 						</select>
 					</span>
-						Style 
+						Sticky 
 						<select class="form-control">
-		  					<option>Marketing</option>
-		 		 			<option>Profit</option>
-		  					<option>Danger</option>
+		  					<option>Glue</option>
+		 		 			<option>Normal</option>
+		  					<option>Oil</option>
 						</select>
 					</span>
 				</div>
