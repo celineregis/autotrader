@@ -21,9 +21,9 @@ module UpdatePre
 		event_token = get_token("event_token")
 		events_with_odds = get_events_with_odds
 		if seed_mode
-			result_array = get_fixtures(0, 1, "") 
+			result_array = get_fixtures(0, 0, "") 
 		else
-			result_array = get_fixtures(0, 1, event_token) 
+			result_array = get_fixtures(0, 0, event_token) 
 		end
 		unless result_array.nil?
 			events_list = result_array[0]
@@ -31,15 +31,13 @@ module UpdatePre
 				l = League.find_by pp_league_id: league["id"]
 				if l 
 					league["events"].each do |event|
-						if events_with_odds.include? event["id"]
+						if events_with_odds.select{|event_with_odds| event_with_odds == event["id"]}.length>0 
 						 	l.events.create(
 						 		pp_event_id: event["id"],
 						 		event_start: event["starts"],
 						 		home: event["home"],
 						 		away: event["away"],
 						 	)
-						else
-							puts "NOPE"
 						end
 					end
 				end

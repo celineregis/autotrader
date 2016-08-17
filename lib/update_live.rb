@@ -24,9 +24,8 @@ module UpdateLive
 		if event
 			league_id = []
 			league_id << League.find(event.league_id).pp_league_id
-			convert_to_format(get_odds(league_id, 1, "")[0])
-		else
-			convert_to_format(get_odds(0, 0, "")[0])
+			odds_hash = convert_to_format(get_odds(0, 0, "")[0])
+			odds_hash[pp_event_id]
 		end
 	end
 
@@ -104,6 +103,7 @@ module UpdateLive
 	end
 
 	def convert_to_format(live_odds)
+		
 		all_odds = {}
 		live_odds.each do |league|
 			league["events"].each do |event|
