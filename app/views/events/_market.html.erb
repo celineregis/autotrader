@@ -2,67 +2,78 @@
 	<h4><%=market%></h4>
 </div>
 <div class="col-md-2">
-	<table class="table-bordered vcenter" id="table-standard-match">
+	<table class="table table-bordered" id="table-standard-match">
     <thead class="thead-inverse">
-      <tr>
-        <th class="text-center" colspan="3">Odds</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th class="text-center">2.20</th>
-        <th class="text-center">2.30</th>
-        <th class="text-center">2.70</th>
-      </tr>
-      <tr>
-        <td class="col-md-2">3.20</td>
-        <td class="col-md-2">3.32</td>
-        <td class="col-md-2">3.23</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="col-md-2">
-	<table class="table-bordered vcenter" id="table-last-30-sec">
-    <thead class="thead-inverse">
-      <tr>
-        <th class="text-center" colspan="3">Match risk</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th class="text-center">1</th>
-        <th class="text-center">X</th>
-        <th class="text-center">2</th>
-      </tr>
-      <tr>
-        <td class="col-md-2">20</td>
-        <td class="col-md-2">50</td>
-        <td class="col-md-2">20</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="col-md-2">
-	<table class="table-bordered vcenter" id="table-last-X-sec">
-    <thead class="thead-inverse">
-      <tr>
-        <th class="text-center" colspan="3">Latest news</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th class="text-center">1</th>
-        <th class="text-center">X</th>
-        <th class="text-center">2</th>
-      </tr>
-      <tr>
-        <td class="col-md-2">20</td>
-        <td class="col-md-2">50</td>
-        <td class="col-md-2">20</td>
-      </tr>
-    </tbody>
-  </table>
+        <tr>
+          <th class="text-center" colspan="<%=odds.length%>">Odds</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <%odds.each do |odd| %>
+            <th class="text-center"><%=odd%></th>
+          <%end%>
+        </tr>
+        <tr>
+          <%odds.each do |odd| %>
+            <td class="text-center"><%=(odd-0.05).round(2)%></th>
+          <%end%>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-2">
+  	<table class="table table-bordered" id="table-last-30-sec">
+      <thead class="thead-inverse">
+        <tr>
+          <th class="text-center" colspan="3">Match risk</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <% if odds.length==3%>
+            <th class="text-center">1</th>
+            <th class="text-center">X</th>
+            <th class="text-center">2</th>
+          <%else%>
+            <th class="text-center">Over</th>
+            <th class="text-center">Under</th>
+          <%end%>
+        </tr>
+        <tr>
+          <%odds.length.times do %>
+            <td class="col-md-2">20</td>
+          <%end%>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-2">
+  	<table class="table table-bordered" id="table-last-X-sec">
+      <thead class="thead-inverse">
+        <tr>
+          <th class="text-center" colspan="3">Latest news</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <% if odds.length==3%>
+            <th class="text-center">1</th>
+            <th class="text-center">X</th>
+            <th class="text-center">2</th>
+          <%else%>
+            <th class="text-center">Over</th>
+            <th class="text-center">Under</th>
+          <%end%>
+        </tr>
+        <tr>
+          <%odds.length.times do %>
+            <td class="col-md-2">20</td>
+          <%end%>
+        </tr>
+      </tbody>
+    </table>
+
 </div>
 
 

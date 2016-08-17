@@ -28,7 +28,6 @@ class Odd < ApplicationRecord
 
 	def self.get_odds_for_event(event_id)
 		odds = get_live_odds_by_id(Event.find(event_id).pp_event_id)
-		binding.pry
 	end
 
 	
