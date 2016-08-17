@@ -11,7 +11,10 @@ updateCheckBoxes = function(updates){
 }
 
 updateLiveOdds = function(oddsHash){
-	debugger
+	$('#Standard-0').text(oddsHash.home_odd)
+	$('#Standard-1').text(oddsHash.draw_odd)
+	$('#Standard-2').text(oddsHash.away_odd)
+	//Todo over under
 }
 
 function askForUpdatesInLiveStatus(){

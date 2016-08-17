@@ -8,7 +8,7 @@ class EventsController < ApplicationController
 
 	def update
 		match_id = params[:id]
-		binding.pry
-		render json: updates
+		@odds_info = Odd.get_odds_for_event(match_id)
+		render json: @odds_info
 	end
 end

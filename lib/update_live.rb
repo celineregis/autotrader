@@ -109,7 +109,11 @@ module UpdateLive
 			league["events"].each do |event|
 				event["periods"].each do |period|
 				if period["number"] == 0 && period["moneyline"] 
-						half_goal_lines = period['totals'].select{|points_line| points_line["points"]%0.5==0 && points_line["points"]%1!=0}
+						if period['totals']
+							half_goal_lines = period['totals'].select{|points_line| points_line["points"]%0.5==0 && points_line["points"]%1!=0}
+						else
+							half_goal_lines = []
+						end
 						if half_goal_lines.length == 0
 							lowest_goal_line = {
 								"over" => 2.0,

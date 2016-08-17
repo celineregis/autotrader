@@ -10,8 +10,8 @@
       </thead>
       <tbody>
         <tr>
-          <%odds.each do |odd| %>
-            <th class="text-center"><%=odd%></th>
+          <%odds.each_with_index do |odd, index| %>
+            <th class="text-center" id=<%="#{market}-#{index}"%>><%=odd%></th>
           <%end%>
         </tr>
         <tr>
