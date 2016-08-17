@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   root to: 'site#menu'
   resources :events, only: [:show]
   get '/updates', to: 'site#update'
+  get 'events/:id/updates', to: 'events#update'
   
 end
