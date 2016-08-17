@@ -53,7 +53,7 @@ module Pinnacle
 	end
 	# TODO: make this using hash.to_param
 	def event_request(league_array, liveOnly, last_token, extension, odds = false)
-		league_extension = league_array == 0 ? "" : "&leagueid=#{league_array.join(',')}"
+		league_extension = league_array == 0 ? "" : "&leagueids=#{league_array.join(',')}"
 	 	token_extension = last_token == "" ? "" : "&since=#{last_token}"
 	 	live_extension = "&isLive=#{liveOnly}"
 	 	odds_format = odds ? "&oddsFormat=DECIMAL" : ""

@@ -26,8 +26,12 @@ class Odd < ApplicationRecord
 		update_live_events
 	end
 
-	def self.get_live_odds_for_event(event_id)
-		get_live_odds_by_id(event_id)
+	def self.get_odds_for_event(event_id)
+		get_live_odds_by_id(Event.find(event_id).pp_event_id)
+	end
+
+	def self.get_e_w_o
+		get_events_with_odds
 	end
 
 end

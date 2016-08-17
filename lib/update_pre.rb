@@ -1,5 +1,3 @@
-require "pstore"
-
 module UpdatePre
 
 	def update_leagues_m
@@ -20,7 +18,8 @@ module UpdatePre
 	end
 
 	def update_events_m(seed_mode = false)
-		event_token = get_event_token("event_token")
+		event_token = get_token("event_token")
+		events_with_odds = get_events_with_odds
 		if seed_mode
 			result_array = get_fixtures(0, 1, "") 
 		else
@@ -32,33 +31,41 @@ module UpdatePre
 				l = League.find_by pp_league_id: league["id"]
 				if l 
 					league["events"].each do |event|
-					 	l.events.create(
-					 		pp_event_id: event["id"],
-					 		event_start: event["starts"],
-					 		home: event["home"],
-					 		away: event["away"],
-					 	)
+						if events_with_odds.include? event["id"]
+						 	l.events.create(
+						 		pp_event_id: event["id"],
+						 		event_start: event["starts"],
+						 		home: event["home"],
+						 		away: event["away"],
+						 	)
+						else
+							puts "NOPE"
+						end
 					end
 				end
 			end
 		end
-		store_event_token(result_array[1],"event_token")
+		store_token(result_array[1],"event_token")
 	end
 
-	def get_event_token(token_type)
-		tokens = PStore.new("tokens.pstore")
-		token = ""
-		tokens.transaction(true) do 
-			token = tokens.fetch(token_type.to_sym).to_s
+	
+	def get_events_with_odds
+		events_with_odds = []
+		odds = get_odds(0, 0, "")[0]
+		odds.each do |league|
+			league["events"].each do |event|
+				event["periods"].each do |period|
+					if period["number"] == 0 && period["moneyline"]
+						events_with_odds << event["id"]
+					end
+				end
+			end
 		end
-		token
+		events_with_odds
 	end
 
-	def store_event_token(token, token_type)
-		tokens = PStore.new("tokens.pstore")
-		tokens.transaction do 
-			tokens[token_type.to_sym] = token
-		end
+	def convert_to_format_pre
+
 	end
 
 	

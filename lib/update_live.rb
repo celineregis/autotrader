@@ -19,61 +19,60 @@ module UpdateLive
 		get_live_status_hash(live_events)
 	end
 
-	def get_live_odds_by_id(event_id)
-		league_id = []
-		event = Event.find_by(id: event_id)
+	def get_live_odds_by_id(pp_event_id)
+		event = Event.find_by(pp_event_id: pp_event_id)
 		if event
+			league_id = []
 			league_id << League.find(event.league_id).pp_league_id
-			pp_event_id = event.pp_event_id
-			odds = convert_to_format(get_odds(0, 1, "")[0])
-			odds.pp_event_id
+			convert_to_format(get_odds(league_id, 1, "")[0])
+		else
+			convert_to_format(get_odds(0, 0, "")[0])
 		end
-		
 	end
 
-	def get_live_events_hash
-		live_events = get_live_fixtures_in_pinnacle_offering
-		live_status = get_live_status_hash(live_events)
-		unless live_events.length == 0
-			result = get_live_odds("")
-			all_odds = convert_to_format(result[0])
-			live_events.each do |league|
-				league["events"].each do |event|
-					league_info = all_leagues[league["id"].to_s]
-					event_info = all_events[event["id"].to_s]
-					odds_info = all_odds[event["id"]]
-					if league_info && event_info && odds_info
-						live_events_hash[league_info["group"]] ||= {}
-						live_events_hash[league_info["group"]][league_info["name"]] ||= {}
-						current_goals = odds_info["home_goals"]+ odds_info["away_goals"]
-						next_goal_text = get_next_goal_text(odds_info, current_goals)
-						next_goal_prob = get_over_prob(odds_info)
-						playing_minute = get_playing_minute(event)
-						probs = convert_odds_to_probabilities(odds_info)
-						live_stats = get_live_stats(event["id"])
-						new_goal_hash[event["id"]] = odds_info["home_goals"] + odds_info["away_goals"]
-						live_events_hash[league_info["group"]][league_info["name"]][event["id"]]={
-								home_team: event_info["home"],
-								away_team: event_info["away"],
-								minute: playing_minute,
-								state: event["state"],
-								home_goals: odds_info["home_goals"],
-								away_goals: odds_info["away_goals"],
-								home_red: odds_info["home_red"],
-								away_red: odds_info["away_red"],
-								home_prob: probs[0],
-								draw_prob: probs[1],
-								away_prob: probs[2],
-								next_goal_prob: next_goal_prob,
-								next_goal_text: next_goal_text,
-								live_stats: live_stats
-						}
-					end
-				end
-			end
-		end
-		live_events_hash
-	end
+	# def get_live_events_hash
+	# 	live_events = get_live_fixtures_in_pinnacle_offering
+	# 	live_status = get_live_status_hash(live_events)
+	# 	unless live_events.length == 0
+	# 		result = get_live_odds("")
+	# 		all_odds = convert_to_format(result[0])
+	# 		live_events.each do |league|
+	# 			league["events"].each do |event|
+	# 				league_info = all_leagues[league["id"].to_s]
+	# 				event_info = all_events[event["id"].to_s]
+	# 				odds_info = all_odds[event["id"]]
+	# 				if league_info && event_info && odds_info
+	# 					live_events_hash[league_info["group"]] ||= {}
+	# 					live_events_hash[league_info["group"]][league_info["name"]] ||= {}
+	# 					current_goals = odds_info["home_goals"]+ odds_info["away_goals"]
+	# 					next_goal_text = get_next_goal_text(odds_info, current_goals)
+	# 					next_goal_prob = get_over_prob(odds_info)
+	# 					playing_minute = get_playing_minute(event)
+	# 					probs = convert_odds_to_probabilities(odds_info)
+	# 					live_stats = get_live_stats(event["id"])
+	# 					new_goal_hash[event["id"]] = odds_info["home_goals"] + odds_info["away_goals"]
+	# 					live_events_hash[league_info["group"]][league_info["name"]][event["id"]]={
+	# 							home_team: event_info["home"],
+	# 							away_team: event_info["away"],
+	# 							minute: playing_minute,
+	# 							state: event["state"],
+	# 							home_goals: odds_info["home_goals"],
+	# 							away_goals: odds_info["away_goals"],
+	# 							home_red: odds_info["home_red"],
+	# 							away_red: odds_info["away_red"],
+	# 							home_prob: probs[0],
+	# 							draw_prob: probs[1],
+	# 							away_prob: probs[2],
+	# 							next_goal_prob: next_goal_prob,
+	# 							next_goal_text: next_goal_text,
+	# 							live_stats: live_stats
+	# 					}
+	# 				end
+	# 			end
+	# 		end
+	# 	end
+	# 	live_events_hash
+	# end
 
 	def get_live_status_hash(live_events)
 		event_ids = []
