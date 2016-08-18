@@ -14,7 +14,6 @@ updateLiveOdds = function(oddsHash){
 	$('#Standard-0').text(oddsHash.home_odd)
 	$('#Standard-1').text(oddsHash.draw_odd)
 	$('#Standard-2').text(oddsHash.away_odd)
-	$('#OverUnderBullshit').text(oddsHash.over_odd)
 	$('#OverUnder25-0').text(oddsHash.over_odd)
 	$('#OverUnder25-1').text(oddsHash.under_odd)
 	if($("#score").data('live')){

@@ -31,7 +31,7 @@ class Odd < ApplicationRecord
 	end
 
 	def self.t
-		mini
+		optimizeTwoWay(200, 100, 1.70, 0.08)
 	end
 
 end
