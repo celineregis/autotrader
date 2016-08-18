@@ -34,4 +34,8 @@ class Odd < ApplicationRecord
 		optimizeTwoWay(200, 100, 1.70, 0.08)
 	end
 
+	def self.ex
+		optimizeThree
+	end
+
 end

@@ -16,4 +16,9 @@ module Optimizer
 		optimizer.x_minimum
 	end
 
+	def optimizeThree
+		
+		rexp = $R.convert "1+1"
+		puts rexp.to_ruby
+	end
 end
