@@ -3,6 +3,7 @@ require 'update_pre'
 require 'pinnacle'
 require 'genius'
 require 'token'
+require 'optimizer'
 
 class ApplicationRecord < ActiveRecord::Base
   extend UpdateLive
@@ -10,5 +11,6 @@ class ApplicationRecord < ActiveRecord::Base
   extend Pinnacle
   extend Genius
   extend Token
+  extend Optimizer
   self.abstract_class = true
 end

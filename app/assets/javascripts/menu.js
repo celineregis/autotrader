@@ -14,6 +14,15 @@ updateLiveOdds = function(oddsHash){
 	$('#Standard-0').text(oddsHash.home_odd)
 	$('#Standard-1').text(oddsHash.draw_odd)
 	$('#Standard-2').text(oddsHash.away_odd)
+	$('#OverUnderBullshit').text(oddsHash.over_odd)
+	$('#OverUnder25-0').text(oddsHash.over_odd)
+	$('#OverUnder25-1').text(oddsHash.under_odd)
+	if($("#score").data('live')){
+		$("#score").text(oddsHash.home_goals + "-" +  oddsHash.away_goals);
+		setTimeout(getUpdatedOdds, 10000);
+	}else{
+		setTimeout(getUpdatedOdds, 40000);
+	}
 	//Todo over under
 }
 
@@ -45,7 +54,6 @@ function getUpdatedOdds(){
 		    success: updateLiveOdds
 	    });
 	}
-	setTimeout(getUpdatedOdds, 1000);
 }
 
 $(document).ready(function(){

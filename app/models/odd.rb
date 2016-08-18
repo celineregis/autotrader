@@ -30,6 +30,8 @@ class Odd < ApplicationRecord
 		odds = get_live_odds_by_id(Event.find(event_id).pp_event_id)
 	end
 
-	
+	def self.t
+		mini
+	end
 
 end

@@ -11,9 +11,9 @@
 				</div>
 				<div class="col-md-2">
 					<% if @event.is_live %>	
-						<h1 style='color:black'><%=@odds_info["home_goals"].to_i%>-<%=@odds_info["away_goals"].to_i%></h1>
+						<h1 id="score" data-live=<%=@event.is_live%> style='color:black'><%=@odds_info["home_goals"].to_i%>-<%=@odds_info["away_goals"].to_i%></h1>
 					<%else%>
-						<h3 style='color:black'>Not started</h3>
+						<h3 id="score" data-live=<%=@event.is_live%> style='color:black'>Not started</h3>
 					<%end%>
 				</div>
 				<div class="col-md-5">	

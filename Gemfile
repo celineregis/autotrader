@@ -16,7 +16,8 @@ gem 'coffee-rails', '~> 4.2'
 gem 'faraday', '~> 0.9.2'
 gem 'faraday_middleware', '~> 0.10.0'
 gem 'bootstrap-sass', '~> 3.3.6'
-
+gem 'sciruby'
+gem 'minimization'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem 'certified'

@@ -11,7 +11,7 @@
       <tbody>
         <tr>
           <%odds.each_with_index do |odd, index| %>
-            <th class="text-center" id=<%="#{market}-#{index}"%>><%=odd%></th>
+            <th class="text-center" id=<%="#{market.gsub(/[^0-9A-Za-z]/, '')}-#{index}"%>><%=odd%></th>
           <%end%>
         </tr>
         <tr>
