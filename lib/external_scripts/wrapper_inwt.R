@@ -1,15 +1,6 @@
 library("INWTLive")
 
-#READ IN EVENTS
-
-#to do...
-
-#GET EVENT POINTS
-
-#Input events
-
-
-wrapper = function(eventStartInMinutesAgo, redCards, matchStatus, playingMinuto, hcpParameter, hcpHome, hcpAway, ouParameter, ouOver, ouUnder, homeGoals, awayGoals){
+wrapper = function(eventStartInMinutesAgo, redCards, matchStatus, playingMinute, hcpParameter, hcpHome, hcpAway, ouParameter, ouOver, ouUnder, homeGoals, awayGoals){
   
   hcpOdds = c(hcpHome, hcpAway)
   ouOdds = c(ouOver, ouUnder)
@@ -17,7 +8,7 @@ wrapper = function(eventStartInMinutesAgo, redCards, matchStatus, playingMinuto,
   q <- INWTLive:::quoten (
     spielID          = 123,
     system.time      = Sys.time(),                                             #Point in time at which you look at odds
-    event.start.time = as.POSIXlt(Sys.time()),                #Kick off NEEDS TO BE SET FOR EVENT
+    event.start.time = as.POSIXlt(Sys.time()-playingMinute*60),                #Kick off NEEDS TO BE SET FOR EVENT
     sql.credentials  = list(),                                                 #Not needed
     provider         = c(30, 31, 34, 35, 40, 62, 63, 64),                      #Not necesairy for transformation refers to Betbrain
     pregame          = FALSE
@@ -105,7 +96,7 @@ wrapper = function(eventStartInMinutesAgo, redCards, matchStatus, playingMinuto,
   if(matchStatus == 3){
     value = append(value,c(0,0))
     type = append(type, c("eos", "bos"))
-    time = append(time,c(45*60000, ((eventStartInMinutesAgo - playingMinuto - 45) * 1000 * 60)))
+    time = append(time,c(45*60000, ((eventStartInMinutesAgo - playingMinute - 45) * 1000 * 60)))
   }
 
   q@events <- data.frame (
@@ -146,20 +137,19 @@ wrapper = function(eventStartInMinutesAgo, redCards, matchStatus, playingMinuto,
   data=data[which(data$marketType=="asian4"),]
   data=data[which(data$sourceProviderId==30),]
   
-  #INSERT FILTER CRITERIA HERE ON DATA
-  standard=data[which(data$resultTypeId=="standard-rest"),]
-  #standard=concat.split.multiple(standard, "quotes", "/")
+  # #INSERT FILTER CRITERIA HERE ON DATA
+  # standard=data[which(data$resultTypeId=="standard-rest"),]
+  # #standard=concat.split.multiple(standard, "quotes", "/")
   
-  over=data[which(data$resultTypeId=="points-more-less-rest"),]
-  #over=concat.split.multiple(over, "quotes", "/")
-  if(sum(over$quotes_1<2.7)==0){
-    over=over[which(over$fixedParam==0.5),]
-  }else{
-    over=over[which(over$quotes_1<2.7),]
-    over=over[which(over$quotes_1>1.4),]
-  }
+  # over=data[which(data$resultTypeId=="points-more-less-rest"),]
+  # #over=concat.split.multiple(over, "quotes", "/")
+  # if(sum(over$quotes_1<2.7)==0){
+  #   over=over[which(over$fixedParam==0.5),]
+  # }else{
+  #   over=over[which(over$quotes_1<2.7),]
+  #   over=over[which(over$quotes_1>1.4),]
+  # }
   
   return(data)
 }  
 
-wrapper(eventStartInMinutesAgo=0, redCards=0, matchStatus=1, playingMinuto=0, hcpParameter=-0.5, hcpHome=1.72, hcpAway=2.0, ouParameter=2.5, ouOver=1.5, ouUnder=2.5, homeGoals=0, awayGoals=0)

@@ -1,10 +1,7 @@
 class Odd < ApplicationRecord
 	belongs_to :event
 	
-	def self.get_info(event_id)
-		#To do
-	end
-
+	
 	def self.update_live_status
 		updates = self.check_for_changes_in_live_status
 		Event.update_active_record_live_status(updates)
@@ -28,6 +25,7 @@ class Odd < ApplicationRecord
 
 	def self.get_odds_for_event(event_id)
 		odds = get_live_odds_by_id(Event.find(event_id).pp_event_id)
+		binding.pry
 	end
 
 	def self.t
@@ -35,7 +33,7 @@ class Odd < ApplicationRecord
 	end
 
 	def self.ex
-		optimizeThree
+		get_live_hash_inwt
 	end
 
 end

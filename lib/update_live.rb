@@ -19,7 +19,7 @@ module UpdateLive
 		get_live_status_hash(live_events)
 	end
 
-	def get_live_odds_by_id(pp_event_id)
+	def get_live_odds_without_inwt_algorithm(pp_event_id)
 		event = Event.find_by(pp_event_id: pp_event_id)
 		if event
 			league_id = []
@@ -29,50 +29,18 @@ module UpdateLive
 		end
 	end
 
-	# def get_live_events_hash
-	# 	live_events = get_live_fixtures_in_pinnacle_offering
-	# 	live_status = get_live_status_hash(live_events)
-	# 	unless live_events.length == 0
-	# 		result = get_live_odds("")
-	# 		all_odds = convert_to_format(result[0])
-	# 		live_events.each do |league|
-	# 			league["events"].each do |event|
-	# 				league_info = all_leagues[league["id"].to_s]
-	# 				event_info = all_events[event["id"].to_s]
-	# 				odds_info = all_odds[event["id"]]
-	# 				if league_info && event_info && odds_info
-	# 					live_events_hash[league_info["group"]] ||= {}
-	# 					live_events_hash[league_info["group"]][league_info["name"]] ||= {}
-	# 					current_goals = odds_info["home_goals"]+ odds_info["away_goals"]
-	# 					next_goal_text = get_next_goal_text(odds_info, current_goals)
-	# 					next_goal_prob = get_over_prob(odds_info)
-	# 					playing_minute = get_playing_minute(event)
-	# 					probs = convert_odds_to_probabilities(odds_info)
-	# 					live_stats = get_live_stats(event["id"])
-	# 					new_goal_hash[event["id"]] = odds_info["home_goals"] + odds_info["away_goals"]
-	# 					live_events_hash[league_info["group"]][league_info["name"]][event["id"]]={
-	# 							home_team: event_info["home"],
-	# 							away_team: event_info["away"],
-	# 							minute: playing_minute,
-	# 							state: event["state"],
-	# 							home_goals: odds_info["home_goals"],
-	# 							away_goals: odds_info["away_goals"],
-	# 							home_red: odds_info["home_red"],
-	# 							away_red: odds_info["away_red"],
-	# 							home_prob: probs[0],
-	# 							draw_prob: probs[1],
-	# 							away_prob: probs[2],
-	# 							next_goal_prob: next_goal_prob,
-	# 							next_goal_text: next_goal_text,
-	# 							live_stats: live_stats
-	# 					}
-	# 				end
-	# 			end
-	# 		end
-	# 	end
-	# 	live_events_hash
-	# end
+	def get_live_odds_by_id(pp_event_id)
+		event = Event.find_by(pp_event_id: pp_event_id)
+		if event
+			league_id = []
+			league_id << League.find(event.league_id).pp_league_id
+			odds_hash = convert_to_asian_format(get_odds(0, 0, "")[0])
+			event_odds = odds_hash[pp_event_id]
+			get_live_hash_inwt(event_odds["hcp_line"], event_odds["home_odd"], event_odds["away_odd"], event_odds["points"], event_odds["over"], event_odds["under"])
+		end
+	end
 
+	
 	def get_live_status_hash(live_events)
 		event_ids = []
 		live_events.each do |league|
@@ -142,11 +110,31 @@ module UpdateLive
 		all_odds
 	end
 
+	def convert_to_asian_format(live_odds)
+		all_odds = {}
+		live_odds.each do |league|
+			league["events"].each do |event|
+				event["periods"].each do |period|
+					if period["number"] == 0 && period["spreads"] && period["totals"]
+						all_odds[event["id"]] = {
+							"home_goals" => event["homeScore"],
+							"away_goals" => event["awayScore"],
+							"home_red" => event["homeRedCards"],
+							"away_red" => event["awayRedCards"],
+							"hcp_line" => period["spreads"][0]["hdp"],
+							"home_odd" => period["spreads"][0]["home"],
+							"away_odd" => period["spreads"][0]["away"],
+							"goal_line" => period["totals"][0]["points"],
+							"over" => period["totals"][0]["over"],
+							"under" => period["totals"][0]["under"] 
+						}
+					end
+				end
+			end
+		end
+		all_odds
+	end
 	
-	
-
-	
-
 	def update_live_record_for_events_with_live_status(live_events)
 		event_ids = []
 		live_events.each do |league|

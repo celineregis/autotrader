@@ -46,7 +46,6 @@ module UpdatePre
 		store_token(result_array[1],"event_token")
 	end
 
-	
 	def get_events_with_odds
 		events_with_odds = []
 		odds = get_odds(0, 0, "")[0]
