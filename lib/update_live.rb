@@ -36,7 +36,7 @@ module UpdateLive
 			league_id << League.find(event.league_id).pp_league_id
 			odds_hash = convert_to_asian_format(get_odds(0, 0, "")[0])
 			event_odds = odds_hash[pp_event_id]
-			get_live_hash_inwt(event_odds["hcp_line"], event_odds["home_odd"], event_odds["away_odd"], event_odds["points"], event_odds["over"], event_odds["under"])
+			get_live_hash_inwt(event_odds["hcp_line"], event_odds["home_odd"], event_odds["away_odd"], event_odds["goal_line"], event_odds["over"], event_odds["under"])
 		end
 	end
 

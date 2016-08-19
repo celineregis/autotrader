@@ -33,7 +33,7 @@ class Odd < ApplicationRecord
 	end
 
 	def self.ex
-		get_live_hash_inwt
+		get_live_hash_inwt(0.5, 1.85, 2.12, 2.5, 1.8, 2.1)
 	end
 
 end
