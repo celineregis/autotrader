@@ -34,7 +34,7 @@ module UpdateLive
 		if event
 			league_id = []
 			league_id << League.find(event.league_id).pp_league_id
-			odds_hash = convert_to_asian_format(get_odds(0, 0, "")[0])
+			odds_hash = convert_to_asian_format(get_odds(league_id, 0, "")[0])
 			event_odds = odds_hash[pp_event_id]
 			get_live_hash_inwt(event_odds["hcp_line"], event_odds["home_odd"], event_odds["away_odd"], event_odds["goal_line"], event_odds["over"], event_odds["under"])
 		end
@@ -44,6 +44,7 @@ module UpdateLive
 	def get_live_status_hash(live_events)
 		event_ids = []
 		playingminutes = []
+		scores = []
 		live_events.each do |league|
 			league["events"].each do |event|
 				event_ids << event["id"] if event["state"] < 7

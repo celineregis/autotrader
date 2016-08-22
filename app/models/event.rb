@@ -10,21 +10,28 @@ class Event < ApplicationRecord
 	end
 
 	def self.update_active_record_live_status(updates)
+		
 		updates[:add].each do |event_id|
 			event = Event.find_by(pp_event_id: event_id)
-			event.is_live = true
-			event.save
+			if event
+				event.is_live = true
+				event.save
+			end
 		end
 		updates[:delete].each do |event_id|
 			event = Event.find_by(pp_event_id: event_id)
-			event.is_live = false
-			event.save
+			if event
+				event.is_live = false
+				event.save
+			end
 		end
 		playing_minutes = updates[:playing_minutes]
 		updates[:ids].each_with_index do|id, index|
 			event = Event.find_by(pp_event_id: id)
-			event.playing_minute = playing_minutes[index]
-			event.save
+			if event
+				event.playing_minute = playing_minutes[index]
+				event.save
+			end
 		end
 	end
 

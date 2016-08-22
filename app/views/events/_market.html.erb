@@ -1,82 +1,33 @@
-<div class="col-md-1 market-name-holder">
+<div class="col-md-4 market-name-holder">
 	<h4><%="#{market} #{param}"%></h4>
 </div>
-<div class="col-md-2">
+<div class="col-md-8">
 	<table class="table table-bordered" id="table-standard-match">
-    <thead class="thead-inverse">
-        <tr>
-          <th class="text-center" colspan="<%=odds.length%>">Odds</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <%odds.each_with_index do |odd, index| %>
-            <th class="text-center" id=<%="#{market.gsub(/[^0-9A-Za-z]/, '')}-#{index}"%>><%=odd.to_f.round(2)%></th>
-          <%end%>
-        </tr>
-        <tr>
-          <%odds.each do |odd| %>
-            <td class="text-center"><%=(odd.to_f-0.05).round(2)%></th>
-          <%end%>
-        </tr>
-          <%odds.length.times do %>
-            <td class="col-md-2">20</td>
-          <%end%>
-        <tr>
-          <%odds.length.times do %>
-            <td class="col-md-2">20</td>
-          <%end%>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="col-md-2">
-  	<table class="table table-bordered" id="table-last-30-sec">
-      <thead class="thead-inverse">
-        <tr>
-          <th class="text-center" colspan="3">Match risk</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <% if odds.length==3%>
-            <th class="text-center">1</th>
-            <th class="text-center">X</th>
-            <th class="text-center">2</th>
-          <%else%>
-            <th class="text-center">Over</th>
-            <th class="text-center">Under</th>
-          <%end%>
-        </tr>
-        <tr>
-          
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="col-md-2">
-  	<table class="table table-bordered" id="table-last-X-sec">
-      <thead class="thead-inverse">
-        <tr>
-          <th class="text-center" colspan="3">Latest news</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <% if odds.length==3%>
-            <th class="text-center">1</th>
-            <th class="text-center">X</th>
-            <th class="text-center">2</th>
-          <%else%>
-            <th class="text-center">Over</th>
-            <th class="text-center">Under</th>
-          <%end%>
-        </tr>
-        
-      </tbody>
-    </table>
-
+    <tbody>
+      <tr>
+        <%odds.each_with_index do |odd, index| %>
+          <th class="text-center" id=<%="#{market.gsub(/[^0-9A-Za-z]/, '')}-#{index}"%>><%=odd.to_f.round(2)%></th>
+        <%end%>
+      </tr>
+      <tr>
+        <%odds.each do |odd| %>
+          <td class="text-center"><%=(odd.to_f-0.05).round(2)%></th>
+        <%end%>
+      </tr>
+        <%odds.length.times do %>
+          <td class="col-md-2">20</td>
+        <%end%>
+      <tr>
+        <%odds.length.times do %>
+          <td class="col-md-2">20</td>
+        <%end%>
+      </tr>
+    </tbody>
+  </table>
 </div>
+  
+
+
 
 
 

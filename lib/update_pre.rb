@@ -61,9 +61,7 @@ module UpdatePre
 		events_with_odds
 	end
 
-	def convert_to_format_pre
-
-	end
+	
 
 	
 

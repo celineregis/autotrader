@@ -12,7 +12,7 @@ module Pinnacle
 
 	def get_live_fixtures_in_pinnacle_offering
 		extension = "v1/inrunning"
-		json_request(extension)["sports"][0]["leagues"] 
+		result = json_request(extension)["sports"][0]["leagues"] 
 	end
 
 	
