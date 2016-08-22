@@ -3,7 +3,20 @@ class League < ApplicationRecord
 	validates :pp_league_id, presence: true, uniqueness:true
 
 	def self.update_leagues
-		update_leagues_m
+		league_response = get_leagues
+		league_hash  ||= {}
+		league_response.each do |line|
+	       	l = League.new
+	       	group = line["name"].split(' - ').length == 2 ? line["name"].split(' - ').first.force_encoding('ISO-8859-1') : "Other"
+			l.name = line["name"].split(' - ').last.force_encoding('ISO-8859-1')
+			l.group = group
+			l.pp_league_id = line["id"]
+			if l.save
+				puts "Saved #{line["name"].split(' - ').last.force_encoding('ISO-8859-1')}"
+			else
+				puts "Did not save"
+			end
+		end
 	end
 
 	def self.get_leagues_with_event
