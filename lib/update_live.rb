@@ -43,12 +43,14 @@ module UpdateLive
 	
 	def get_live_status_hash(live_events)
 		event_ids = []
+		playingminutes = []
 		live_events.each do |league|
 			league["events"].each do |event|
 				event_ids << event["id"] if event["state"] < 7
+				playingminutes << event["elapsed"]
 			end
 		end
-		event_ids
+		[event_ids, playingminutes]
 	end
 
 	def get_live_odds(token)

@@ -1,5 +1,5 @@
 <div class="col-md-1 market-name-holder">
-	<h4><%=market%></h4>
+	<h4><%="#{market} #{param}"%></h4>
 </div>
 <div class="col-md-2">
 	<table class="table table-bordered" id="table-standard-match">
@@ -11,12 +11,20 @@
       <tbody>
         <tr>
           <%odds.each_with_index do |odd, index| %>
-            <th class="text-center" id=<%="#{market.gsub(/[^0-9A-Za-z]/, '')}-#{index}"%>><%=odd%></th>
+            <th class="text-center" id=<%="#{market.gsub(/[^0-9A-Za-z]/, '')}-#{index}"%>><%=odd.to_f.round(2)%></th>
           <%end%>
         </tr>
         <tr>
           <%odds.each do |odd| %>
-            <td class="text-center"><%=(odd-0.05).round(2)%></th>
+            <td class="text-center"><%=(odd.to_f-0.05).round(2)%></th>
+          <%end%>
+        </tr>
+          <%odds.length.times do %>
+            <td class="col-md-2">20</td>
+          <%end%>
+        <tr>
+          <%odds.length.times do %>
+            <td class="col-md-2">20</td>
           <%end%>
         </tr>
       </tbody>
@@ -41,9 +49,7 @@
           <%end%>
         </tr>
         <tr>
-          <%odds.length.times do %>
-            <td class="col-md-2">20</td>
-          <%end%>
+          
         </tr>
       </tbody>
     </table>
@@ -66,11 +72,7 @@
             <th class="text-center">Under</th>
           <%end%>
         </tr>
-        <tr>
-          <%odds.length.times do %>
-            <td class="col-md-2">20</td>
-          <%end%>
-        </tr>
+        
       </tbody>
     </table>
 

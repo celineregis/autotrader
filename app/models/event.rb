@@ -20,6 +20,12 @@ class Event < ApplicationRecord
 			event.is_live = false
 			event.save
 		end
+		playing_minutes = updates[:playing_minutes]
+		updates[:ids].each_with_index do|id, index|
+			event = Event.find_by(pp_event_id: id)
+			event.playing_minute = playing_minutes[index]
+			event.save
+		end
 	end
 
 end

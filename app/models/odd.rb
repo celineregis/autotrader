@@ -14,10 +14,14 @@ class Odd < ApplicationRecord
 
 	def self.check_for_changes_in_live_status
 		update_live_hash = {}
-		new_ids = self.get_live_ids
+		results = self.get_live_ids
+		new_ids = results[0]
+		playing_minutes = results[1]
 		update_live_events = {
 			add: new_ids - $live_events,
-			delete: $live_events - new_ids
+			delete: $live_events - new_ids,
+			ids: new_ids,
+			playing_minutes: playing_minutes
 		}
 		$live_events = new_ids
 		update_live_events
@@ -25,7 +29,7 @@ class Odd < ApplicationRecord
 
 	def self.get_odds_for_event(event_id)
 		odds = get_live_odds_by_id(Event.find(event_id).pp_event_id)
-		binding.pry
+		odds
 	end
 
 	def self.t
