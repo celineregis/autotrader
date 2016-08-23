@@ -13,7 +13,7 @@ class Event < ApplicationRecord
 		else
 			result_array = get_fixtures(0, 0, event_token) 
 		end
-		unless result_array.nil?
+		unless result_array[0].nil?
 			events_list = result_array[0]
 			events_list.each do |league|
 				l = League.find_by pp_league_id: league["id"]
@@ -34,30 +34,10 @@ class Event < ApplicationRecord
 		store_token(result_array[1],"event_token")
 	end
 
-	def self.update_active_record_live_status(updates)
-		
-		updates[:add].each do |event_id|
-			event = Event.find_by(pp_event_id: event_id)
-			if event
-				event.is_live = true
-				event.save
-			end
-		end
-		updates[:delete].each do |event_id|
-			event = Event.find_by(pp_event_id: event_id)
-			if event
-				event.is_live = false
-				event.save
-			end
-		end
-		playing_minutes = updates[:playing_minutes]
-		updates[:ids].each_with_index do|id, index|
-			event = Event.find_by(pp_event_id: id)
-			if event
-				event.playing_minute = playing_minutes[index]
-				event.save
-			end
-		end
+	def self.update_live_status
+		updates = self.check_for_changes_in_live_status
+		Event.update_active_record_live_status(updates)
+		updates
 	end
 
 	private 
@@ -76,5 +56,41 @@ class Event < ApplicationRecord
 		end
 		events_with_odds
 	end
+
+	def self.check_for_changes_in_live_status
+		results = self.get_live_ids
+		current_ids = results
+		update_live_events = {
+			add: current_ids - $live_events,
+			delete: $live_events - current_ids,
+		}
+		$live_events = current_ids
+		update_live_events
+	end
+
+	def self.get_live_ids
+		live_events = get_live_fixtures_in_pinnacle_offering
+		get_live_status_hash(live_events)
+	end
+
+	def self.update_active_record_live_status(updates)
+		
+		updates[:add].each do |event_id|
+			event = Event.find_by(pp_event_id: event_id)
+			if event
+				event.is_live = true
+				event.save
+			end
+		end
+		updates[:delete].each do |event_id|
+			event = Event.find_by(pp_event_id: event_id)
+			if event
+				event.is_live = false
+				event.save
+			end
+		end
+	end
+
+	
 
 end

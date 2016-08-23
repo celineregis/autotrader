@@ -5,7 +5,7 @@ class SiteController < ApplicationController
 	end
 
 	def update
-		updates = Odd.update_live_status
+		updates = Event.update_live_status
 		render json: updates
 	end
 

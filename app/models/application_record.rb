@@ -1,13 +1,11 @@
-require 'update_live'
-require 'update_pre'
+require 'live_operations'
 require 'pinnacle'
 require 'token'
 require 'bookmaker'
 require 'optimizer'
 
 class ApplicationRecord < ActiveRecord::Base
-  extend UpdateLive
-  extend UpdatePre
+  extend LiveOperations
   extend Pinnacle
   extend Bookmaker
   extend Token

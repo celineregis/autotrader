@@ -6,7 +6,7 @@
     <tbody>
       <tr>
         <%odds.each_with_index do |odd, index| %>
-          <th class="text-center" id=<%="#{market.gsub(/[^0-9A-Za-z]/, '')}-#{index}"%>><%=odd.to_f.round(2)%></th>
+          <th class="text-center" id=<%="#{market.gsub(/[^0-9A-Za-z]/, '')}-#{param}-#{index}"%>><%=odd.to_f.round(2)%></th>
         <%end%>
       </tr>
       <tr>

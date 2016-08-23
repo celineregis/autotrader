@@ -134,7 +134,11 @@ wrapper = function(eventStartInMinutesAgo, redCards, matchStatus, playingMinute,
   }
   
   data=q@output
-  data=data[which(data$marketType=="asian3"),]
+  if(playingMinute==0){
+    data=data[which(data$marketType=="asian4"),]
+  }else{
+    data=data[which(data$marketType=="asian3"),]
+  }
   data=data[which(data$sourceProviderId==30),]
   
   # #INSERT FILTER CRITERIA HERE ON DATA

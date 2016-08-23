@@ -11,7 +11,7 @@
 				</div>
 				<div class="col-md-2">
 					<% if @event.is_live %>	
-						<h1 id="score" data-live=<%=@event.is_live%> style='color:black'><%=@odds_info["home_goals"].to_i%>-<%=@odds_info["away_goals"].to_i%></h1>
+						<h1 id="score" data-live=<%=@event.is_live%> style='color:black'><%=@event_info[:home_goals].to_i%>-<%=@event_info[:away_goals].to_i%></h1>
 					<%else%>
 						<h3 id="score" data-live=<%=@event.is_live%> style='color:black'>Not started</h3>
 					<%end%>
@@ -23,8 +23,8 @@
 			<div class="row" id="playing-minute">
 				<div class="progress">
 					<% if @event.is_live %>
-		  				<div class="progress-bar" role="progressbar" aria-valuenow=<%=@event.playing_minute%> aria-valuemin="0" aria-valuemax="90" style="width:<%='#{@event.playing_minute/90}%'%>">
-		    				<%=@event.playing_minute%>
+		  				<div class="progress-bar" id="pb-playing-minute" role="progressbar" aria-valuenow=<%=@event_info[:playing_minute]%> aria-valuemin="0" aria-valuemax="90" style=<%="width:#{(@event_info[:playing_minute]/0.9).to_i}%"%>>
+		    				<%=@event_info[:playing_minute]%>
 		 				</div>
 		 			<%else%>
 		 				<div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="90" style="width:100%">
