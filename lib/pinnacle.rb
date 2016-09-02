@@ -19,7 +19,6 @@ module Pinnacle
 	def get_fixtures(league_array, liveOnly, last_token) #returns all events by default, set liveOnly=1 for only live
 		extension = "v1/fixtures?#{FOOTBALL_ID}"
 		response = event_request(league_array, liveOnly, last_token, extension)
-		puts response
 		results = []
 		unless response.nil?
 		 	results << response["league"]
@@ -47,7 +46,7 @@ module Pinnacle
   			faraday.response :logger                  # log requests to STDOUT
   			faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
   			faraday.response :json, :content_type => /\bjson$/
-		end
+  		end
 		conn.basic_auth(USER,PASSWORD)
 		conn.get(string).body
 	end
@@ -57,10 +56,29 @@ module Pinnacle
 	 	token_extension = last_token == "" ? "" : "&since=#{last_token}"
 	 	live_extension = "&isLive=#{liveOnly}"
 	 	odds_format = odds ? "&oddsFormat=DECIMAL" : ""
-	 	full_query = extension + league_extension + token_extension + live_extension + odds_format
-	 	json_request(full_query)
+	 	if token_extension == "" && api_rules_violated?(odds)
+	 		odds ? $odd_results : $event_results
+		else
+	 		full_query = extension + league_extension + token_extension + live_extension + odds_format
+	 		if odds
+	 			$last_odds_request == Time.now
+	 			$odd_results = json_request(full_query)
+	 			$odd_results
+	 			$odd_results
+	 		else
+	 			$last_event_request == Time.now
+	 			$last_event_results = json_request(full_query)
+	 			$last_event_results
+	 		end
+	 	end
 	end
 
-
+	def api_rules_violated?(odds)
+		if odds
+			(Time.now - $last_odds_request) < 120
+		else
+			(Time.now - $last_event_request) < 120
+		end
+	end
 end
 
