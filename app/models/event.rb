@@ -7,7 +7,7 @@ class Event < ApplicationRecord
 
 	def self.update_events(seed_mode = false)
 		event_token = get_token("event_token")
-		events_with_odds = get_events_with_odds
+		#events_with_odds = get_events_with_odds
 		if seed_mode
 			result_array = get_fixtures(0, 0, "") 
 		else
@@ -19,14 +19,14 @@ class Event < ApplicationRecord
 				l = League.find_by pp_league_id: league["id"]
 				if l 
 					league["events"].each do |event|
-						if events_with_odds.select{|event_with_odds| event_with_odds == event["id"]}.length>0 
+					# 	if events_with_odds.select{|event_with_odds| event_with_odds == event["id"]}.length>0 
 						 	l.events.create(
 						 		pp_event_id: event["id"],
 						 		event_start: event["starts"],
 						 		home: event["home"],
 						 		away: event["away"],
 						 	)
-						end
+					# 	end
 					end
 				end
 			end

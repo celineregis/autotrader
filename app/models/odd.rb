@@ -1,8 +1,7 @@
 class Odd < ApplicationRecord
 	belongs_to :event
-	@@last_update_for_event
-	@@last_call_time
-
+	@@last_update_for_event = {}
+	
 	def self.get_odds_for_event(event_id, first_time=false)
 		event = Event.find(event_id)
 		if event
@@ -10,13 +9,10 @@ class Odd < ApplicationRecord
 			league_id << League.find(event.league_id).pp_league_id
 			if first_time
 				result = get_odds(league_id, 0, "")
-				puts result[0]
-		    	odds_hash = convert_to_asian_format(result[0])
+				odds_hash = convert_to_asian_format(result[0])
 		    else
-		    	puts get_token("event_odd_token")
 		    	result = get_odds(league_id, 0, get_token("event_odd_token"))
-		    	puts result[0]
-		    	odds_hash = convert_to_asian_format(result[0])
+		    	odds_hash = result[0] ? convert_to_asian_format(result[0]) : {}
 		    end
 			token = result[1]
 			store_token(token, "event_odd_token")
@@ -41,7 +37,6 @@ class Odd < ApplicationRecord
 					event_odds["away_goals"], event_odds["playing_minute"] 
 				), event_info]
 			end
-			puts @@last_update_for_event
 			@@last_update_for_event
 		end
 	end

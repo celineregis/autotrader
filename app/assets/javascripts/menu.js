@@ -15,8 +15,7 @@ updateLiveOdds = function(oddsHash){
 	Object.keys(oddsHash[0]).forEach(function(market_name){
 		Object.keys(oddsHash[0][market_name]).forEach(function(param){
 			for(var i=0; i<oddsHash[0][market_name][param]["odds"].length; i++){
-				selector = "#" + market_name.replace(/[\. ,:-]+/g, "-") + "-" + param + "-" + i
-				console.log($(selector))
+				selector = "#" + market_name.replace(/[\. ,:-]+/g, "") + param.toString().replace('.','').replace(':','') + i
 				$(selector).text(Math.round(100*oddsHash[0][market_name][param]["odds"][i])/100)	
 			}
 		})
@@ -86,7 +85,7 @@ $(document).ready(function(){
 	$(document).on('input change', '.form-control', function(event){
 		$(event.target).animate({boxShadow : "0 0 5px 1px #c8102e"})
 	});
-	setTimeout(pollingForUpdates, 0);
+	setTimeout(pollingForUpdates, 10);
 	
 });
 
