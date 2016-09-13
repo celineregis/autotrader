@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-	has_many :odds
+	has_many :selections
 	belongs_to :league
 	validates :pp_event_id, presence: true, uniqueness: true
 	validates_format_of :home, without: /Corner/

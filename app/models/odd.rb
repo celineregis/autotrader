@@ -1,5 +1,6 @@
 class Odd < ApplicationRecord
-	belongs_to :event
+	belongs_to :selection
+	has_many :bets
 	@@last_update_for_event = {}
 	
 	def self.get_odds_for_event(event_id, first_time=false)

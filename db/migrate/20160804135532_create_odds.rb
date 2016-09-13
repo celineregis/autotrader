@@ -6,7 +6,7 @@ class CreateOdds < ActiveRecord::Migration[5.0]
     	t.float 	:home_odd
     	t.float 	:draw_odd
     	t.float 	:away_odd
-      	t.timestamps
+      t.timestamps
     end
   end
 end
