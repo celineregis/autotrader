@@ -153,7 +153,8 @@ wrapper = function(eventStartInMinutesAgo, redCards, matchStatus, playingMinute,
   #   over=over[which(over$quotes_1<2.7),]
   #   over=over[which(over$quotes_1>1.4),]
   # }
-  
-  return(data)
+
+  desiredMarkets = c("standard", "standard-rest", "double-chance", "handicap-rest", "points-more-less-rest", "next-point" )
+  return(data[which(data$resultTypeId%in%desiredMarkets),])
 }  
 

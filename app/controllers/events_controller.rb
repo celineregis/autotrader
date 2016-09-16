@@ -14,6 +14,7 @@ class EventsController < ApplicationController
 
 		match_id = params[:id]
 		@event = Event.find_by(id: match_id)
+		Selection.create_selections(@event)
 		results = Odd.get_odds_for_event(match_id, true)
 		@odds_info = results[0]
 		@event_info = results[1]

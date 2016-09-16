@@ -20,12 +20,13 @@ class Event < ApplicationRecord
 				if l 
 					league["events"].each do |event|
 					# 	if events_with_odds.select{|event_with_odds| event_with_odds == event["id"]}.length>0 
-						 	l.events.create(
+						 	e = l.events.create(
 						 		pp_event_id: event["id"],
 						 		event_start: event["starts"],
 						 		home: event["home"],
 						 		away: event["away"],
 						 	)
+						 	
 					# 	end
 					end
 				end
